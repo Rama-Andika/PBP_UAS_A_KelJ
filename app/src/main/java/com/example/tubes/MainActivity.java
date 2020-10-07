@@ -11,22 +11,17 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView link_signup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        link_signup = (TextView) findViewById(R.id.link_signup);
-        link_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Signup.class);
-                startActivity(i);
-            }
-        });
-        MaterialButton btn_login = findViewById(R.id.btn_login);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
 
     }
+
+
 }
