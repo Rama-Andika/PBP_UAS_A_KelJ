@@ -32,11 +32,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_person_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:boxBackgroundColor="#00FFFFFF"
-            app:passwordToggleTint="#00FFFFFF">
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:passwordToggleTint="#00FFFFFF"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_name"
@@ -49,11 +53,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_person_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:boxBackgroundColor="#00FFFFFF"
-            app:passwordToggleTint="#00FFFFFF">
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:passwordToggleTint="#00FFFFFF"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_username"
@@ -66,10 +74,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_smartphone_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:boxBackgroundColor="#00FFFFFF">
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:startIconDrawable="@drawable/ic_baseline_smartphone_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_number"
@@ -80,14 +92,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_email_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:boxBackgroundColor="#00FFFFFF">
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#FF9800"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_emailR"
@@ -98,16 +113,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_enhanced_encryption_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:boxBackgroundColor="#00FFFFFF">
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:startIconDrawable="@drawable/ic_baseline_enhanced_encryption_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_passwordR"
@@ -125,7 +141,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Create Account" />
+            android:text="Create Account"
+            app:backgroundTint="#000000" />
 
         <TextView
             android:id="@+id/link_login"

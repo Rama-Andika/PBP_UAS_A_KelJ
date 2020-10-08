@@ -19,17 +19,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="HOTEL"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <!--  Email Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_email_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="#FFFFFF"
-            app:boxBackgroundColor="#00FFFFFF">
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            app:startIconTint="#FF9800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_emailR"
@@ -43,10 +48,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_baseline_enhanced_encryption_24"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:boxBackgroundColor="#00FFFFFF">
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:startIconDrawable="@drawable/ic_baseline_enhanced_encryption_24"
+            app:startIconTint="#FF9800"
+            app:startIconTintMode="multiply">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_passwordR"
@@ -62,8 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:background="#9C5C5C"
             android:padding="12dp"
-            android:text="Login" />
+            android:text="Login"
+            app:backgroundTint="#000000" />
 
         <TextView
             android:id="@+id/link_signup"
