@@ -20,6 +20,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -47,6 +49,8 @@ public class SignupActivity extends AppCompatActivity {
         password = (TextInputEditText) findViewById(R.id.input_passwordR);
         btn_signup = (MaterialButton) findViewById(R.id.btn_signup);
         link_login = (TextView) findViewById(R.id.link_login);
+
+
 
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +94,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(!task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "SignUp Unccessfull, Please Try Again", Toast.LENGTH_SHORT).show();
+                    FirebaseAuthException e = (FirebaseAuthException)task.getException();
+                    Toast.makeText(getApplicationContext(), "SignUp Unccessfull, Please Try Again"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     btn_signup.setEnabled(true);
                 }
                 else{
@@ -170,8 +175,8 @@ public class SignupActivity extends AppCompatActivity {
             input_number.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            this.password.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 6 || password.length() > 15) {
+            this.password.setError("between 6 and 10 alphanumeric characters");
             valid = false;
         } else {
             this.password.setError(null);

@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         input_password = (TextInputEditText) findViewById(R.id.input_passwordR);
         btn_login = (MaterialButton) findViewById(R.id.btn_login);
         link_signup = (TextView) findViewById(R.id.link_signup);
+
+
 
         btn_login.setOnClickListener(new View.OnClickListener() {
 
@@ -146,8 +149,8 @@ public class LoginActivity extends AppCompatActivity {
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             input_email.setError("enter a valid email address");
             valid = false;
-        } else if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            input_password.setError("between 4 and 10 alphanumeric characters");
+        } else if (password.isEmpty() || password.length() < 6 || password.length() > 15) {
+            input_password.setError("between 6 and 15 alphanumeric characters");
             valid = false;
         } else {
             input_password.setError(null);
