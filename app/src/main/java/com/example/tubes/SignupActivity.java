@@ -29,9 +29,9 @@ public class SignupActivity extends AppCompatActivity {
 
     TextInputEditText input_username;
     TextInputEditText input_name;
-    TextInputEditText input_emailR;
+    TextInputEditText email;
     TextInputEditText input_number;
-    TextInputEditText input_passwordR;
+    TextInputEditText password;
     MaterialButton btn_signup;
     TextView link_login;
 
@@ -41,10 +41,10 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         mFirebaseAuth = FirebaseAuth.getInstance();
         input_name = (TextInputEditText) findViewById(R.id.input_name);
-        input_emailR = (TextInputEditText) findViewById(R.id.input_emailR);
+        email = (TextInputEditText) findViewById(R.id.input_emailR);
         input_number = (TextInputEditText) findViewById(R.id.input_number);
         input_username = (TextInputEditText) findViewById(R.id.input_username);
-        input_passwordR = (TextInputEditText) findViewById(R.id.input_passwordR);
+        password = (TextInputEditText) findViewById(R.id.input_passwordR);
         btn_signup = (MaterialButton) findViewById(R.id.btn_signup);
         link_login = (TextView) findViewById(R.id.link_login);
 
@@ -81,12 +81,12 @@ public class SignupActivity extends AppCompatActivity {
 
 
         String name = input_name.getText().toString();
-        String input1 = input_emailR.getText().toString();
         String mobile = input_number.getText().toString();
         String user = input_username.getText().toString();
-        String input2 = input_passwordR.getText().toString();
+        String email = this.email.getText().toString();
+        String password = this.password.getText().toString();
 
-        mFirebaseAuth.createUserWithEmailAndPassword(input1,input2).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+        mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(!task.isSuccessful()) {
@@ -119,6 +119,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
+
     public void onSignupSuccess() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -134,10 +135,10 @@ public class SignupActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = input_name.getText().toString();
-        String email = input_emailR.getText().toString();
+        String email = this.email.getText().toString();
         String mobile = input_number.getText().toString();
         String user = input_username.getText().toString();
-        String password = input_passwordR.getText().toString();
+        String password = this.password.getText().toString();
 
 
         if (name.isEmpty() || name.length() < 3) {
@@ -156,10 +157,10 @@ public class SignupActivity extends AppCompatActivity {
 
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            input_emailR.setError("enter a valid email address");
+            this.email.setError("enter a valid email address");
             valid = false;
         } else {
-            input_emailR.setError(null);
+            this.email.setError(null);
         }
 
         if (mobile.isEmpty() || mobile.length()!=10) {
@@ -170,10 +171,10 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            input_passwordR.setError("between 4 and 10 alphanumeric characters");
+            this.password.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
-            input_passwordR.setError(null);
+            this.password.setError(null);
         }
 
 
