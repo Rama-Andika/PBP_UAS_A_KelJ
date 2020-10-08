@@ -102,6 +102,10 @@ public class LoginActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
                                 }
                             }, 3000);
+
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 }
             }
         });
@@ -132,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
+
         btn_login.setEnabled(true);
         finish();
     }
