@@ -93,6 +93,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerInParent="true"
+                    android:onClick="profileMenu"
                     android:src="@drawable/profile" />
 
                 <TextView
@@ -116,7 +117,6 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:gravity="center"
-
             android:orientation="vertical"
             android:padding="16dp"
             app:cardCornerRadius="10dp"
@@ -249,13 +249,14 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/out"
+        android:id="@+id/btn_signout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
         android:layout_marginBottom="16dp"
         android:text="Sign Out"
+        android:onClick="signOut"
         android:textSize="16sp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:backgroundTint="#000000"
