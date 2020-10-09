@@ -1,8 +1,11 @@
 package com.example.tubes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         imageView.setAnimation(topAnim);
         textView.setAnimation(botAnim);
 
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

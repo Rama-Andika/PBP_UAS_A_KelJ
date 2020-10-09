@@ -25,7 +25,6 @@
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:onClick="handleImageClick"
                 android:src="@drawable/notes" />
 
         </RelativeLayout>
@@ -98,8 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update"
-                app:backgroundTint="#FF9800"
-                android:onClick="updateProfile"/>
+                app:backgroundTint="#FF9800"/>
 
 
             <com.google.android.material.button.MaterialButton
@@ -108,17 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="Back"
                 app:backgroundTint="#ED3929" />
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/updateProfileButton"
-                app:layout_constraintEnd_toEndOf="@+id/updateProfileButton"
-                app:layout_constraintHorizontal_bias="0.465"
-                app:layout_constraintStart_toStartOf="@+id/updateProfileButton"
-                app:layout_constraintTop_toTopOf="@+id/updateProfileButton"
-                app:layout_constraintVertical_bias="0.0" />
+
 
         </LinearLayout>
     </LinearLayout>
