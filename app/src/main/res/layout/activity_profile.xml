@@ -15,40 +15,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="#858585"
-            android:padding="20dp">
+            android:layout_height="210dp"
+            android:background="#FF9800">
 
-            <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_baseline_person_24" />
 
-            <TextView
-                android:id="@+id/full_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/profile_image"
-                android:includeFontPadding="false"
-                android:text="Rama Andika"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/fullname_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/full_name"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/profile_image"
-                android:includeFontPadding="false"
-                android:text="Rama Andika"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_profile"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:onClick="handleImageClick"
+                android:src="@drawable/notes" />
 
         </RelativeLayout>
 
@@ -120,7 +98,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update"
-                app:backgroundTint="#FF9800" />
+                app:backgroundTint="#FF9800"
+                android:onClick="updateProfile"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                app:backgroundTint="#ED3929" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/updateProfileButton"
+                app:layout_constraintEnd_toEndOf="@+id/updateProfileButton"
+                app:layout_constraintHorizontal_bias="0.465"
+                app:layout_constraintStart_toStartOf="@+id/updateProfileButton"
+                app:layout_constraintTop_toTopOf="@+id/updateProfileButton"
+                app:layout_constraintVertical_bias="0.0" />
 
         </LinearLayout>
     </LinearLayout>

@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="monospace"
-                android:text="Hotel"
+                android:text="THE QUEEN HOTEL"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="italic" />
@@ -187,6 +187,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:onClick="BookingHotel"
                     android:src="@drawable/book_hotel" />
 
                 <TextView
@@ -195,7 +197,7 @@
                     android:layout_below="@+id/imgHotel"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="BOOKING\nHOTEL"
+                    android:text="BOOKONG HOTEL"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="#000000"
                     android:textStyle="bold" />
