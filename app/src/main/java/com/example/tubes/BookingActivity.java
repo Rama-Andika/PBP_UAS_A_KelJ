@@ -68,7 +68,7 @@ public class BookingActivity extends AppCompatActivity{
         input_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                input_date.setEnabled(false);
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         BookingActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
