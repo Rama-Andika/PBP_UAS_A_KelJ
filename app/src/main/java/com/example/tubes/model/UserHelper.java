@@ -1,25 +1,18 @@
-package com.example.tubes.Model;
+package com.example.tubes.model;
 
 public class UserHelper {
 
-        String name, username, email, number, password;
-
-    public UserHelper(String name, String username, String email, String number) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.number = number;
-    }
+    String name, username, number, email, password;
 
     public UserHelper() {
 
     }
 
-    public UserHelper(String name, String username, String email, String number, String password) {
+    public UserHelper(String name, String username, String number, String email, String password) {
         this.name = name;
         this.username = username;
-        this.email = email;
         this.number = number;
+        this.email = email;
         this.password = password;
     }
 
@@ -39,20 +32,20 @@ public class UserHelper {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

@@ -22,7 +22,7 @@
         <item
             android:id="@+id/nav_booking"
             android:icon="@drawable/hotel"
-            android:title="Booking Hotel"
+            android:title="Book Room"
             android:orderInCategory="1"
             app:showAsAction="never"/>
         <item

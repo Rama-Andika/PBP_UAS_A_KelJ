@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,24 +19,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.example.tubes.Model.UserHelper;
+
+import com.example.tubes.model.UserHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 
 public class SignupActivity extends AppCompatActivity {
+    String name;
+    String email;
+    String number;
+    String username;
+    String password;
     private static final String TAG = "SignupActivity";
     FirebaseAuth mFirebaseAuth;
     FirebaseDatabase rootNode;
@@ -43,7 +54,7 @@ public class SignupActivity extends AppCompatActivity {
     private String CHANNEL_ID = "Channel 1";
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    TextInputLayout name, user, email, number, password;
+    TextInputLayout layout_name, layout_user, layout_email, layout_number, layout_password;
 
     TextInputEditText input_username;
     TextInputEditText input_name;
@@ -59,11 +70,11 @@ public class SignupActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_signup);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        name = (TextInputLayout) findViewById(R.id.name);
-        email = (TextInputLayout) findViewById(R.id.email);
-        number = (TextInputLayout) findViewById(R.id.number);
-        user = (TextInputLayout) findViewById(R.id.username);
-        password = (TextInputLayout) findViewById(R.id.password);
+        layout_name = (TextInputLayout) findViewById(R.id.name);
+        layout_email = (TextInputLayout) findViewById(R.id.email);
+        layout_number = (TextInputLayout) findViewById(R.id.number);
+        layout_user = (TextInputLayout) findViewById(R.id.username);
+        layout_password = (TextInputLayout) findViewById(R.id.password);
 
         input_name = (TextInputEditText) findViewById(R.id.input_name);
         input_email = (TextInputEditText) findViewById(R.id.input_emailR);
@@ -107,11 +118,12 @@ public class SignupActivity extends AppCompatActivity {
 
 
 
-        String name_layout = name.getEditText().getText().toString();
-        String user_layout = user.getEditText().getText().toString();
-        String email_layout = email.getEditText().getText().toString();
-        String number_layout = number.getEditText().getText().toString();
-        String password_layout = password.getEditText().getText().toString();
+        String name_layout = layout_name.getEditText().getText().toString();
+        String user_layout = layout_user.getEditText().getText().toString();
+        String email_layout = layout_email.getEditText().getText().toString();
+        String number_layout = layout_number.getEditText().getText().toString();
+        String password_layout = layout_password.getEditText().getText().toString();
+
 
 
 
@@ -134,30 +146,54 @@ public class SignupActivity extends AppCompatActivity {
                     btn_signup.setEnabled(true);
                 }
                 else{
-                    rootNode = FirebaseDatabase.getInstance();
-                    reference = rootNode.getReference("users");
-                    UserHelper helper = new UserHelper(name_layout, user_layout, email_layout, number_layout);
+                    FirebaseUser rUser = mFirebaseAuth.getCurrentUser();
+                    String userId = rUser.getUid();
+                    reference =  FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                    HashMap<String,String> hashMap = new HashMap<>();
+                    hashMap.put("userId",userId);
+                    hashMap.put("name",name_layout);
+                    hashMap.put("username",user_layout);
+                    hashMap.put("number",number_layout);
+                    hashMap.put("email",email_layout);
+                    hashMap.put("password",password_layout);
+                    hashMap.put("imageURL","default");
+                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
+                                progressDialog.setIndeterminate(true);
+                                progressDialog.setMessage("Creating Account...");
+                                progressDialog.show();
 
-                    reference.child(user_layout).setValue(helper);
-                    final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setMessage("Creating Account...");
-                    progressDialog.show();
+                                new Handler().postDelayed(
+                                        new Runnable() {
+                                            public void run() {
+                                                // On complete call either onSignupSuccess or onSignupFailed
+                                                // depending on success
+                                                onSignupSuccess();
+                                                // onSignupFailed();
+                                                progressDialog.dismiss();
+                                            }
+                                        }, 3000);
 
-                    new Handler().postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    // On complete call either onSignupSuccess or onSignupFailed
-                                    // depending on success
-                                    onSignupSuccess();
-                                    // onSignupFailed();
-                                    progressDialog.dismiss();
-                                }
-                            }, 3000);
-                    createNotificationChannel();
-                    addNotification();
-                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                    startActivity(intent);
+
+                                createNotificationChannel();
+                                addNotification();
+                                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(SignupActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+
+
+
+
                 }
 
             }
@@ -228,6 +264,8 @@ public class SignupActivity extends AppCompatActivity {
 
         return valid;
     }
+
+
 
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

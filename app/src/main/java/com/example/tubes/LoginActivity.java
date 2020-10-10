@@ -25,13 +25,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
     private SharedPreferences preferences;
     public static final int mode = Activity.MODE_PRIVATE;
     private String email ="";
@@ -42,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
 
+    TextInputLayout email_layout, pass_layout;
     private TextInputEditText input_email;
     private TextInputEditText input_password;
     private MaterialButton btn_login;
@@ -56,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loadPreferences();
         mFirebaseAuth = FirebaseAuth.getInstance();
+        email_layout = findViewById(R.id.email);
+        pass_layout = findViewById(R.id.password);
         input_email = (TextInputEditText) findViewById(R.id.input_emailR);
         input_password = (TextInputEditText) findViewById(R.id.input_passwordR);
         input_email.setText(email);
@@ -246,4 +258,7 @@ public class LoginActivity extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0,builder.build());
     }
+
+
+
 }
