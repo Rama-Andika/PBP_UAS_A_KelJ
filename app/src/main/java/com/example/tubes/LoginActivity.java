@@ -1,11 +1,13 @@
 package com.example.tubes;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,15 +23,20 @@ import androidx.core.app.NotificationCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private SharedPreferences preferences;
+    public static final int mode = Activity.MODE_PRIVATE;
+    private String email ="";
+    private String password ="";
+
     FirebaseAuth mFirebaseAuth;
     private String CHANNEL_ID = "Channel 1";
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -39,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText input_password;
     private MaterialButton btn_login;
     private TextView link_signup;
+    MaterialCheckBox rememberMe;
 
 
     @Override
@@ -46,9 +54,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_login);
+        loadPreferences();
         mFirebaseAuth = FirebaseAuth.getInstance();
         input_email = (TextInputEditText) findViewById(R.id.input_emailR);
         input_password = (TextInputEditText) findViewById(R.id.input_passwordR);
+        input_email.setText(email);
+        input_password.setText(password);
+        rememberMe = findViewById(R.id.rememberMe);
         btn_login = (MaterialButton) findViewById(R.id.btn_login);
         link_signup = (TextView) findViewById(R.id.link_signup);
 
@@ -75,6 +87,32 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+
+    private void loadPreferences(){
+        String name = "profilr";
+        preferences = getSharedPreferences(name, mode);
+        if(preferences!=null)
+        {
+            email = preferences.getString("email", "");
+            password = preferences.getString("password", "");
+        }
+    }
+
+    private void savePreferences(){
+        SharedPreferences.Editor editor = preferences.edit();
+        if(!input_email.getText().toString().isEmpty() && !input_password.getText().toString().isEmpty())
+        {
+            editor.putString("email", input_email.getText().toString());
+            editor.putString("password", input_password.getText().toString());
+            editor.apply();
+        }
+        else
+        {
+            Toast.makeText(this, "Fill correctly", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void login() {
         Log.d(TAG, "Login");
 
@@ -89,6 +127,12 @@ public class LoginActivity extends AppCompatActivity {
 
         String input1 = input_email.getText().toString();
         String input2 = input_password.getText().toString();
+
+        if (rememberMe.isChecked()){
+            savePreferences();
+        }
+
+
         mFirebaseAuth.signInWithEmailAndPassword(input1,input2).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

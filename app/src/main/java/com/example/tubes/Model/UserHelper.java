@@ -4,6 +4,12 @@ public class UserHelper {
 
         String name, username, email, number, password;
 
+    public UserHelper(String name, String username, String email, String number) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.number = number;
+    }
 
     public UserHelper() {
 

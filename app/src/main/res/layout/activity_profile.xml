@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="full_name"
+                app:boxBackgroundColor="#00FFFFFF"
                 app:boxStrokeColor="#FF9800"
                 app:endIconTint="#FF9800"
                 app:hintTextColor="#FF9800"
@@ -59,6 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Email"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:boxBackgroundMode="filled"
                 app:boxStrokeColor="#FF9800"
                 app:endIconTint="#FF9800"
                 app:hintTextColor="#FF9800"
@@ -78,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Mobile Number"
+                app:boxBackgroundColor="#00FFFFFF"
                 app:boxStrokeColor="#FF9800"
                 app:endIconTint="#FF0000"
                 app:hintTextColor="#FF9800"
@@ -105,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Back"
-                app:backgroundTint="#ED3929" />
+                app:backgroundTint="#000000" />
 
 
         </LinearLayout>

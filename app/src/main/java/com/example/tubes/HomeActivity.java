@@ -54,24 +54,26 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You Click about us", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.nav_booking){
-            Toast.makeText(getApplicationContext(), "You Click booking", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(HomeActivity.this, BookingActivity.class));
         }
         else if(id == R.id.nav_history){
             Toast.makeText(getApplicationContext(), "You Click history", Toast.LENGTH_SHORT).show();
         }
         else if(id == R.id.nav_location){
-            Toast.makeText(getApplicationContext(), "You Click location", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
             Toast.makeText(getApplicationContext(), "You Click our room", Toast.LENGTH_SHORT).show();
         }
         else if(id == R.id.nav_profile)
         {
-            Toast.makeText(getApplicationContext(), "You Click profile", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "You Click logout", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         }
     return true;
     }

@@ -25,6 +25,7 @@ import com.example.tubes.Model.UserHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -93,6 +94,9 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+
+
+
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -101,8 +105,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("users");
+
 
         String name_layout = name.getEditText().getText().toString();
         String user_layout = user.getEditText().getText().toString();
@@ -110,9 +113,7 @@ public class SignupActivity extends AppCompatActivity {
         String number_layout = number.getEditText().getText().toString();
         String password_layout = password.getEditText().getText().toString();
 
-        UserHelper helper = new UserHelper(name_layout, user_layout, email_layout, number_layout,password_layout);
 
-        reference.setValue(helper);
 
 
 
@@ -133,6 +134,11 @@ public class SignupActivity extends AppCompatActivity {
                     btn_signup.setEnabled(true);
                 }
                 else{
+                    rootNode = FirebaseDatabase.getInstance();
+                    reference = rootNode.getReference("users");
+                    UserHelper helper = new UserHelper(name_layout, user_layout, email_layout, number_layout);
+
+                    reference.child(user_layout).setValue(helper);
                     final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setMessage("Creating Account...");
