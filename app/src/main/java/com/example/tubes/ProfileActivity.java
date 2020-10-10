@@ -32,6 +32,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final int  CAMERA_PERMISSION_CODE = 1;
+    private static final int CAMERA_REQUEST_CODE = 2;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -45,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
 
     CircleImageView profileImageView;
-    MaterialButton updateProfileButton;
+    MaterialButton btn_update;
     MaterialButton btn_back;
 
 
@@ -67,8 +69,8 @@ public class ProfileActivity extends AppCompatActivity {
         input_username = findViewById(R.id.input_username);
         input_number = findViewById(R.id.input_number);
 
-        profileImageView = findViewById(R.id.profileImage);
-        updateProfileButton = findViewById(R.id.btn_update);
+        profileImageView = findViewById(R.id.image_profile);
+        btn_update = findViewById(R.id.btn_update);
         btn_back = findViewById(R.id.btn_back);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -92,7 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                databaseReference.child("name").setValue(layout_name.getEditText().getText().toString());
+                databaseReference.child("username").setValue(layout_username.getEditText().getText().toString());
+                databaseReference.child("email").setValue(layout_email.getEditText().getText().toString());
+                databaseReference.child("number").setValue(layout_number.getEditText().getText().toString());
+            }
+        });
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -103,31 +114,36 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         if (ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.CAMERA)
-        != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{
                     Manifest.permission.CAMERA
-            }, 10001);
+            }, 101);
         }
 
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,10001);
+                startActivityForResult(intent,101);
             }
         });
+
+
 
 
     }
 
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        if (requestCode == 101) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             profileImageView.setImageBitmap(bitmap);
         }

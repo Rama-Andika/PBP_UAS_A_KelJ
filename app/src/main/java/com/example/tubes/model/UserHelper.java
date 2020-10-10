@@ -14,6 +14,7 @@ public class UserHelper {
         this.number = number;
         this.email = email;
         this.password = password;
+
     }
 
     public String getName() {
@@ -55,4 +56,6 @@ public class UserHelper {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

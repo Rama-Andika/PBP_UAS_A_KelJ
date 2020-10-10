@@ -156,7 +156,6 @@ public class SignupActivity extends AppCompatActivity {
                     hashMap.put("number",number_layout);
                     hashMap.put("email",email_layout);
                     hashMap.put("password",password_layout);
-                    hashMap.put("imageURL","default");
                     reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
