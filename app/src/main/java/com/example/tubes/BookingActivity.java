@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -42,6 +43,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     private TextInputEditText input_name, input_date, input_adult, input_child;
     MaterialButton btn_book;
     Spinner roomType;
+    ArrayAdapter <String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -61,7 +63,8 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         input_child = (TextInputEditText) findViewById(R.id.input_child);
         btn_book = findViewById(R.id.btn_book);
         roomType = findViewById(R.id.input_roomType);
-        roomType.setOnItemSelectedListener(this);
+
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -158,6 +161,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
 
         return valid;
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

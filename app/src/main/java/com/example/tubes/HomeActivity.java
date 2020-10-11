@@ -3,6 +3,8 @@ package com.example.tubes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.nav_aboutUs){
-            Toast.makeText(getApplicationContext(), "You Click about us", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
         }
         else if (id == R.id.nav_booking){
             startActivity(new Intent(HomeActivity.this, BookingActivity.class));
@@ -63,7 +65,8 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
-            Toast.makeText(getApplicationContext(), "You Click our room", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(HomeActivity.this, RoomActivity.class);
+            startActivity(i);
         }
         else if(id == R.id.nav_profile)
         {
@@ -71,11 +74,27 @@ public class HomeActivity extends AppCompatActivity {
         }
         else
         {
-            FirebaseAuth.getInstance().signOut();
-            finish();
-            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            AlertDialog.Builder alert = new AlertDialog.Builder(HomeActivity.this);
+            alert.setMessage("Are you sure?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()                 {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            logout(); // Last step. Logout function
+
+                        }
+                    }).setNegativeButton("No", null);
+
+            AlertDialog alert1 = alert.create();
+            alert1.show();
         }
     return true;
+    }
+
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
     public void profileMenu(View view) {
@@ -87,5 +106,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent i = new Intent(HomeActivity.this, BookingActivity.class);
         startActivity(i);
     }
+
+    public void ourRoom(View view) {
+        Intent i = new Intent(HomeActivity.this, RoomActivity.class);
+        startActivity(i);
+    }
+
+
 
 }

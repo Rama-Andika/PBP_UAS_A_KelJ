@@ -24,8 +24,9 @@
             android:layout_marginBottom="24dp"
             android:background="#00AE3232"
             android:backgroundTint="#007E1414"
-            android:textAlignment="center"
+            android:fontFamily="@font/kavoon"
             android:text="BOOKING\nHOTEL"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp" />
 

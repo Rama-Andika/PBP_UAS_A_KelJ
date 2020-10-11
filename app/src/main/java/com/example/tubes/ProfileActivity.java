@@ -1,13 +1,19 @@
 package com.example.tubes;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,24 +22,37 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.tubes.model.UserHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private static final int  CAMERA_PERMISSION_CODE = 1;
-    private static final int CAMERA_REQUEST_CODE = 2;
+    private String CHANNEL_ID = "Channel 1";
+
+    private int REQUEST_IMAGE_CAPTURE = 100;
+    private int RESULT_OK = -1;
+    private int PERMISSION_CODE = 1001;
+    private int IMAGE_PICK_CODE = 1001;
+
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -98,10 +117,19 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                databaseReference.child("name").setValue(layout_name.getEditText().getText().toString());
-                databaseReference.child("username").setValue(layout_username.getEditText().getText().toString());
-                databaseReference.child("email").setValue(layout_email.getEditText().getText().toString());
-                databaseReference.child("number").setValue(layout_number.getEditText().getText().toString());
+                AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+                alert.setMessage("Update Data?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()                 {
+
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                updateData();
+
+                            }
+                        }).setNegativeButton("No", null);
+
+                AlertDialog alert1 = alert.create();
+                alert1.show();
             }
         });
 
@@ -128,8 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,101);
+                selectImage();
             }
         });
 
@@ -138,15 +165,175 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    private void selectImage() {
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        builder.setTitle("Add Photo");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    takePictureIntent();
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        if(ActivityCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                            String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE };
+                            requestPermissions(permissions, PERMISSION_CODE);
+                        }
+                        else{
+                            pickImageFromGallery();
+                        }
+                    }
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+
+    private void pickImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE);
+    }
+
+    private void takePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(ProfileActivity.this.getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            pickImageFromGallery();
+        }
+        else{
+            Toast.makeText(ProfileActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateData(){
+        databaseReference.child("name").setValue(layout_name.getEditText().getText().toString());
+        databaseReference.child("username").setValue(layout_username.getEditText().getText().toString());
+        databaseReference.child("email").setValue(layout_email.getEditText().getText().toString());
+        databaseReference.child("number").setValue(layout_number.getEditText().getText().toString());
+    }
+
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            profileImageView.setImageBitmap(bitmap);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            profileImageView.setImageBitmap(imageBitmap);////bnampilin gambar yang difoto dr kamera jadi cuman preview
+            handleUpload(imageBitmap);//manggil fungsi handle upload untuk di upload ke firebase storage
         }
+        else if(requestCode == IMAGE_PICK_CODE && resultCode == RESULT_OK){
+            Uri uri = data.getData();
+
+            final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            profileImageView.setImageURI(uri);
+
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            final StorageReference ref = FirebaseStorage.getInstance().getReference()
+                    .child("profileImages")
+                    .child(uid + ".jpeg");
+
+            ref.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            getDownloadUrl(ref);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ProfileActivity.this, e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void handleUpload(Bitmap bitmap) {
+
+        final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
+        progressDialog.setTitle("Uploading...");
+        progressDialog.show();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final StorageReference reference = FirebaseStorage.getInstance().getReference()
+                .child("profileImages")
+                .child(uid + ".jpeg");
+
+        reference.putBytes(byteArrayOutputStream.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        getDownloadUrl(reference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileActivity.this, e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getDownloadUrl(StorageReference reference) {
+
+        reference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        setUserProfileUrl(uri);
+                    }
+                });
+    }
+    private void setUserProfileUrl(Uri uri){
+        FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri)
+                .build();
+
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ProfileActivity.this, "Update successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ProfileActivity.this, "Profile image failed...", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 

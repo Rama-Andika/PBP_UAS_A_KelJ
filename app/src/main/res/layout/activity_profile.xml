@@ -7,12 +7,12 @@
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
+        
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="210dp"
@@ -55,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_person_24"
                     android:drawablePadding="10dp"
-                    android:inputType="textPersonName"/>
+                    android:fontFamily="@font/abril_fatface"
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +77,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_person_24"
                     android:drawablePadding="10dp"
-                    android:inputType="text"/>
+                    android:fontFamily="@font/abril_fatface"
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -98,7 +100,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_email_24"
                     android:drawablePadding="10dp"
-                    android:inputType="textEmailAddress"/>
+                    android:fontFamily="@font/abril_fatface"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -119,7 +122,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_smartphone_24"
                     android:drawablePadding="10dp"
-                    android:inputType="number"/>
+                    android:fontFamily="@font/abril_fatface"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

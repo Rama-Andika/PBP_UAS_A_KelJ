@@ -4,7 +4,7 @@
     <string name="mapbox_access_token">pk.eyJ1IjoicmFtbTQ4IiwiYSI6ImNrZm5wdm03cjFvZHIycXBqN2lvcTgwNXoifQ.ePZPzf3Qm-LqJcBcHNSS2w</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
-    
+
     <string-array name="room_list">
         <item>Standart</item>
         <item>Classic</item>
