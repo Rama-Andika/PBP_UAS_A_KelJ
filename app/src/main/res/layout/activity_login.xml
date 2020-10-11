@@ -15,7 +15,14 @@
         android:paddingRight="24dp">
 
 
-
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/kavoon"
+            android:gravity="center"
+            android:text="Login"
+            android:textSize="34sp" />
         <!--  Email Label -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email"

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -32,14 +33,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
-public class BookingActivity extends AppCompatActivity{
+public class BookingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     protected Cursor cursor;
     DatePickerDialog.OnDateSetListener setListener;
     private static final String TAG = "BookingActivity";
     private TextInputLayout name, room, date, adult, child;
-    private TextInputEditText input_name, input_roomType, input_date, input_adult, input_child;
+    private TextInputEditText input_name, input_date, input_adult, input_child;
     MaterialButton btn_book;
+    Spinner roomType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -54,11 +56,12 @@ public class BookingActivity extends AppCompatActivity{
         child = (TextInputLayout) findViewById(R.id.child);
 
         input_name = (TextInputEditText) findViewById(R.id.input_name);
-        input_roomType = (TextInputEditText) findViewById(R.id.input_roomType);
         input_date = (TextInputEditText) findViewById(R.id.input_date);
         input_adult = (TextInputEditText) findViewById(R.id.input_adult);
         input_child = (TextInputEditText) findViewById(R.id.input_child);
         btn_book = findViewById(R.id.btn_book);
+        roomType = findViewById(R.id.input_roomType);
+        roomType.setOnItemSelectedListener(this);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -118,7 +121,6 @@ public class BookingActivity extends AppCompatActivity{
         boolean valid = true;
 
         String name = input_name.getText().toString();
-        String roomType = input_roomType.getText().toString();
         String date = input_date.getText().toString();
         String adult = input_adult.getText().toString();
         String child = input_child.getText().toString();
@@ -130,12 +132,7 @@ public class BookingActivity extends AppCompatActivity{
             input_name.setError(null);
         }
 
-        if (roomType.isEmpty()) {
-            input_roomType.setError("Enter Valid Room Type");
-            valid = false;
-        } else {
-            input_roomType.setError(null);
-        }
+
 
 
         if (date.isEmpty()){
@@ -162,4 +159,13 @@ public class BookingActivity extends AppCompatActivity{
         return valid;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

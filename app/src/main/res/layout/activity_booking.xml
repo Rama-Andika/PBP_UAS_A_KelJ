@@ -55,7 +55,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/room"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:boxBackgroundColor="#00FFFFFF"
@@ -66,12 +66,14 @@
             app:startIconDrawable="@drawable/book_hotel"
             app:startIconTint="#FF9800">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <Spinner
                 android:id="@+id/input_roomType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Room Type"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="-35dp"
+                android:entries="@array/room_list"
+                android:hint="Room Type" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

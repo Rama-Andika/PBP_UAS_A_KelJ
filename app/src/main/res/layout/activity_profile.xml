@@ -25,7 +25,9 @@
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/notes" />
+                android:background="#FFFFFF"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/people" />
 
         </RelativeLayout>
 

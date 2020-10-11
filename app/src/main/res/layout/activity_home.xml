@@ -68,7 +68,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:backgroundTint="#FFFAFA">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                         android:layout_below="@id/imgProfile"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/abril_fatface"
+                        android:fontFamily="@font/cantora_one"
                         android:text="Profile"
                         android:textSize="24sp" />
 
@@ -113,7 +114,7 @@
                         android:layout_below="@id/imgHistory"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/abril_fatface"
+                        android:fontFamily="@font/cantora_one"
                         android:text="History"
                         android:textSize="24sp" />
 
@@ -155,7 +156,7 @@
                         android:layout_below="@id/imgHotel"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/abril_fatface"
+                        android:fontFamily="@font/cantora_one"
                         android:text=" BookRoom"
                         android:textSize="24sp" />
 
@@ -187,7 +188,7 @@
                         android:layout_below="@id/imgBed"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/abril_fatface"
+                        android:fontFamily="@font/cantora_one"
                         android:text="Our Room"
                         android:textSize="24sp" />
 
