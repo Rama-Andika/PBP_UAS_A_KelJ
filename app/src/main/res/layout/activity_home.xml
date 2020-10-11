@@ -198,6 +198,7 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
+                        android:onClick="OurRoom"
                         app:srcCompat="@drawable/ic_baseline_king_bed_24" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
