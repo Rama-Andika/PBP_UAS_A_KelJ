@@ -128,7 +128,6 @@ public class HotelLocationActivity extends AppCompatActivity implements OnMapRea
 
                         initLayers(style);
 
-                        Toast.makeText(HotelLocationActivity.this, "Touch icon to get location", Toast.LENGTH_LONG).show();
 
                         btnUserLocation = findViewById(R.id.back_to_camera_tracking_mode);
                         btnUserLocation.setOnClickListener(new View.OnClickListener() {
