@@ -23,26 +23,33 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/blue"
+        android:background="@color/orange"
         android:enabled="false"
         android:text="Start navigation"
         android:textColor="@color/mapboxWhite"
         mapbox:layout_constraintStart_toStartOf="parent"
         mapbox:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/menu_item_change_style" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_location_search"
+        android:id="@+id/our_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        mapbox:tint="@android:color/white"
-        mapbox:srcCompat="@android:drawable/ic_search_category_default"/>
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="81dp"
+        mapbox:backgroundTint="@color/orange"
+        mapbox:srcCompat="@drawable/ic_get_location"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/back_to_camera_tracking_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        mapbox:backgroundTint="@color/orange"
+        mapbox:srcCompat="@drawable/ic_my_location" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

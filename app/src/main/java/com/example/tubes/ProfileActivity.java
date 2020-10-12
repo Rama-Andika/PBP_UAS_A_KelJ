@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.tubes.model.UserHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,8 +44,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -53,11 +54,11 @@ public class ProfileActivity extends AppCompatActivity {
     private int PERMISSION_CODE = 1001;
     private int IMAGE_PICK_CODE = 1001;
 
-    private FirebaseUser firebaseUser;
+    private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    View view;
+
     private TextInputLayout layout_name, layout_username, layout_email,layout_number;
     private TextInputEditText input_name, input_username, input_email, input_number;
 
@@ -65,7 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
 
-    CircleImageView profileImageView;
+    public ImageView image_view;
+
     MaterialButton btn_update;
     MaterialButton btn_back;
 
@@ -77,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
 
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
         layout_name = findViewById(R.id.name);
         layout_email = findViewById(R.id.email);
         layout_username = findViewById(R.id.username);
@@ -88,13 +90,21 @@ public class ProfileActivity extends AppCompatActivity {
         input_username = findViewById(R.id.input_username);
         input_number = findViewById(R.id.input_number);
 
-        profileImageView = findViewById(R.id.image_profile);
+        image_view = findViewById(R.id.image_profile);
         btn_update = findViewById(R.id.btn_update);
         btn_back = findViewById(R.id.btn_back);
+        RelativeLayout image_layout = findViewById(R.id.image_layout);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+
+        if (user != null) {
+            if(user.getPhotoUrl() != null){
+                Glide.with(ProfileActivity.this)
+                        .load(user.getPhotoUrl())
+                        .into(image_view);
+            }
+        }
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -153,10 +163,10 @@ public class ProfileActivity extends AppCompatActivity {
             }, 101);
         }
 
-        profileImageView.setOnClickListener(new View.OnClickListener() {
+        image_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                selectPicture();
             }
         });
 
@@ -165,7 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void selectImage() {
+    private void selectPicture() {
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
         builder.setTitle("Add Photo");
@@ -238,8 +248,8 @@ public class ProfileActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            profileImageView.setImageBitmap(imageBitmap);////bnampilin gambar yang difoto dr kamera jadi cuman preview
-            handleUpload(imageBitmap);//manggil fungsi handle upload untuk di upload ke firebase storage
+            image_view.setImageBitmap(imageBitmap);
+            uploadHandle(imageBitmap);
         }
         else if(requestCode == IMAGE_PICK_CODE && resultCode == RESULT_OK){
             Uri uri = data.getData();
@@ -248,7 +258,7 @@ public class ProfileActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            profileImageView.setImageURI(uri);
+            image_view.setImageURI(uri);
 
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             final StorageReference ref = FirebaseStorage.getInstance().getReference()
@@ -273,7 +283,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void handleUpload(Bitmap bitmap) {
+    private void uploadHandle(Bitmap bitmap) {
 
         final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
         progressDialog.setTitle("Uploading...");

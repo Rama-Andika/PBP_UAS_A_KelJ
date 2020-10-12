@@ -65,8 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
-            Intent i = new Intent(HomeActivity.this, RoomActivity.class);
-            startActivity(i);
+            startActivity(new Intent(HomeActivity.this, RoomActivity.class));
         }
         else if(id == R.id.nav_profile)
         {
@@ -80,10 +79,10 @@ public class HomeActivity extends AppCompatActivity {
 
                         public void onClick(DialogInterface dialog, int which) {
 
-                            logout(); // Last step. Logout function
+                            logout();
 
                         }
-                    }).setNegativeButton("No", null);
+                    }).setNegativeButton("Cancel", null);
 
             AlertDialog alert1 = alert.create();
             alert1.show();
@@ -95,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         finish();
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+
     }
 
     public void profileMenu(View view) {
@@ -111,7 +111,4 @@ public class HomeActivity extends AppCompatActivity {
         Intent i = new Intent(HomeActivity.this, RoomActivity.class);
         startActivity(i);
     }
-
-
-
 }
