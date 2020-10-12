@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Menu</string>
+    <string name="app_name">Queen</string>
     <string name="queen_hotel">Queen Hotel</string>
     <string name="mapbox_access_token">pk.eyJ1IjoicmFtbTQ4IiwiYSI6ImNrZm5wdm03cjFvZHIycXBqN2lvcTgwNXoifQ.ePZPzf3Qm-LqJcBcHNSS2w</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>

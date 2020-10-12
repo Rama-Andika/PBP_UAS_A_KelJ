@@ -11,6 +11,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -53,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     private int RESULT_OK = -1;
     private int PERMISSION_CODE = 1001;
     private int IMAGE_PICK_CODE = 1001;
+    private Toolbar toolbar;
 
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
@@ -94,6 +99,10 @@ public class ProfileActivity extends AppCompatActivity {
         btn_update = findViewById(R.id.btn_update);
         btn_back = findViewById(R.id.btn_back);
         RelativeLayout image_layout = findViewById(R.id.image_layout);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
 
 
 
@@ -173,6 +182,61 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_aboutUs){
+            startActivity(new Intent(ProfileActivity.this, AboutUsActivity.class));
+        }
+        else if (id == R.id.nav_booking){
+            startActivity(new Intent(ProfileActivity.this, BookingActivity.class));
+        }
+        else if(id == R.id.nav_history){
+            Toast.makeText(getApplicationContext(), "You Click history", Toast.LENGTH_SHORT).show();
+        }
+        else if(id == R.id.nav_location){
+            startActivity(new Intent(ProfileActivity.this, HotelLocationActivity.class));
+        }
+        else if(id == R.id.nav_ourRoom){
+            startActivity(new Intent(ProfileActivity.this, RoomActivity.class));
+        }
+        else if(id == R.id.nav_profile)
+        {
+            startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+        }
+        else
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+            alert.setMessage("Are you sure?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()                 {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            logout();
+
+                        }
+                    }).setNegativeButton("Cancel", null);
+
+            AlertDialog alert1 = alert.create();
+            alert1.show();
+        }
+        return true;
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
     }
 
     private void selectPicture() {

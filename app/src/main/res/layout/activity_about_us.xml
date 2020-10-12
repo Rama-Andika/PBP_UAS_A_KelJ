@@ -12,14 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="210dp">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@drawable/new_crown"
             android:layout_width="200dp"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="#FFFFFF"
-            android:backgroundTint="#00FFFFFF"/>
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/new_crown" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
