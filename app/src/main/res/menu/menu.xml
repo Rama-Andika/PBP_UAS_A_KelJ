@@ -32,12 +32,6 @@
             android:orderInCategory="1"
             app:showAsAction="never"/>
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/hotel"
-            android:title="History"
-            android:orderInCategory="1"
-            app:showAsAction="never"/>
-        <item
             android:id="@+id/nav_ourRoom"
             android:icon="@drawable/hotel"
             android:title="Our Room"

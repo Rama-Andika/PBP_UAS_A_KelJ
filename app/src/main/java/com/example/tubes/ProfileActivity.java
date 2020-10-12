@@ -204,9 +204,6 @@ public class ProfileActivity extends AppCompatActivity {
         else if (id == R.id.nav_booking){
             startActivity(new Intent(ProfileActivity.this, BookingActivity.class));
         }
-        else if(id == R.id.nav_history){
-            Toast.makeText(getApplicationContext(), "You Click history", Toast.LENGTH_SHORT).show();
-        }
         else if(id == R.id.nav_location){
             startActivity(new Intent(ProfileActivity.this, HotelLocationActivity.class));
         }

@@ -61,9 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         else if (id == R.id.nav_booking){
             startActivity(new Intent(HomeActivity.this, BookingActivity.class));
         }
-        else if(id == R.id.nav_history){
-            Toast.makeText(getApplicationContext(), "You Click history", Toast.LENGTH_SHORT).show();
-        }
         else if(id == R.id.nav_location){
             startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
