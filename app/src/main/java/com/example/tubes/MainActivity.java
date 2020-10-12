@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!task.isSuccessful()){
                             mag = "Failed";
                         }
-                        Toast.makeText(MainActivity.this,mag,Toast.LENGTH_SHORT).show();
+                        ;
                     }
                 });
 

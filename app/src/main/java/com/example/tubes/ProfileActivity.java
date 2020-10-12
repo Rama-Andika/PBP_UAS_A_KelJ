@@ -195,7 +195,10 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_aboutUs){
+        if (id == R.id.nav_home){
+            startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+        }
+        else if (id == R.id.nav_aboutUs){
             startActivity(new Intent(ProfileActivity.this, AboutUsActivity.class));
         }
         else if (id == R.id.nav_booking){
