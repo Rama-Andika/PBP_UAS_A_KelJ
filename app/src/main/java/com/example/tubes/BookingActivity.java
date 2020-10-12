@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tubes.model.BookRoom;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -31,10 +32,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class BookingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    DatabaseReference databaseReference;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
+    FirebaseUser firebaseUser;
 
     protected Cursor cursor;
     DatePickerDialog.OnDateSetListener setListener;
@@ -42,7 +52,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     private TextInputLayout name, room, date, adult, child;
     private TextInputEditText input_name, input_date, input_adult, input_child;
     MaterialButton btn_book;
-    Spinner roomType;
+    Spinner spinner;
     ArrayAdapter <String> adapter;
 
     @Override
@@ -53,7 +63,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
 
         name = (TextInputLayout) findViewById(R.id.name);
         room = (TextInputLayout) findViewById(R.id.room);
-        date = (TextInputLayout) findViewById(R.id.date);
+       date = (TextInputLayout) findViewById(R.id.date);
         adult = (TextInputLayout) findViewById(R.id.adult);
         child = (TextInputLayout) findViewById(R.id.child);
 
@@ -62,9 +72,9 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         input_adult = (TextInputEditText) findViewById(R.id.input_adult);
         input_child = (TextInputEditText) findViewById(R.id.input_child);
         btn_book = findViewById(R.id.btn_book);
-        roomType = findViewById(R.id.input_roomType);
+        spinner = findViewById(R.id.input_roomType);
 
-
+        //String text = spinner.getSelectedItem().toString();
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -105,6 +115,17 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
             onBookingFailed();
             return;
         }
+
+
+        String text = spinner.getSelectedItem().toString();
+
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Booking");
+
+        BookRoom bookRoom = new BookRoom(text);
+
+        databaseReference.child(text);
 
         onBookingSuccess();
     }

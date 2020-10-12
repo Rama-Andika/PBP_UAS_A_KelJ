@@ -361,7 +361,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final StorageReference reference = FirebaseStorage.getInstance().getReference()
-                .child("profileImages")
+                .child("profile_images")
                 .child(uid + ".jpeg");
 
         reference.putBytes(byteArrayOutputStream.toByteArray())
