@@ -111,4 +111,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent i = new Intent(HomeActivity.this, RoomActivity.class);
         startActivity(i);
     }
+
+    public void listUser(View view) {
+        Intent i = new Intent(HomeActivity.this, ShowListPelangganActivity.class);
+        startActivity(i);
+    }
 }

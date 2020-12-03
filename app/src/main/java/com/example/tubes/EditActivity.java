@@ -1,53 +1,46 @@
 package com.example.tubes;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import android.os.Handler;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tubes.API.ApiClient;
 import com.example.tubes.API.ApiInterface;
 import com.example.tubes.API.UserResponse;
-import com.example.tubes.model.BookRoom;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+public class EditActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
@@ -63,12 +56,17 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     private String sRoom = "";
     private String[] saRoom = new String[] {"Classic", "Standart", "Deluxe"};
     private ProgressDialog progressDialog;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_booking);
+
+        id = getIntent().getStringExtra("id");
+        Log.i("EDITUSERID", "ID User: " + id);
+
         progressDialog = new ProgressDialog(this);
 
         exposedDropdownRoom = findViewById(R.id.edRoom);
@@ -105,7 +103,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
             public void onClick(View v) {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        BookingActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        EditActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month+1;
@@ -124,7 +122,40 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
                 booking();
             }
         });
+        loadUser(id);
 
+    }
+
+    private void loadUser(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<UserResponse> call = apiService.getPelangganById(id, "data");
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                String nama = response.body().getPelanggans().get(0).getNama_pelanggan();
+                String dewasa = response.body().getPelanggans().get(0).getJml_dewasa();
+                String tanggal = response.body().getPelanggans().get(0).getDate();
+                sRoom = response.body().getPelanggans().get(0).getRoom();
+                String anak = response.body().getPelanggans().get(0).getJml_kecil();
+
+                input_name.setText(nama);
+                input_adult.setText(dewasa);
+                exposedDropdownRoom.setText(sRoom, false);
+                input_date.setText(tanggal);
+                input_child.setText(anak);
+
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(EditActivity.this, "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+                Log.i("EDITERROR", t.getMessage());
+                progressDialog.dismiss();
+            }
+        });
     }
 
     public void booking(){
@@ -136,20 +167,22 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
         }
         progressDialog.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<UserResponse> add = apiService.createPelanggan(input_name.getText().toString(),
+        Call<UserResponse> req = apiService.updatePelanggan(id, input_name.getText().toString(),
                 sRoom, input_date.getText().toString(), input_adult.getText().toString(), input_child.getText().toString());
 
-        add.enqueue(new Callback<UserResponse>() {
+        req.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                Toast.makeText(BookingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                Log.i("EDIT", new GsonBuilder().setPrettyPrinting().create().toJson(response));
                 progressDialog.dismiss();
-                onBackPressed();
+                finish();
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(BookingActivity.this, "Kesalahan jaringan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditActivity.this, "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+                Log.i("EDIT", t.getMessage());
                 progressDialog.dismiss();
             }
         });
@@ -211,13 +244,5 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

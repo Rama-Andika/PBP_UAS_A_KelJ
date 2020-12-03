@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -37,8 +38,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import java.util.HashMap;
 import java.util.Objects;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -47,12 +52,14 @@ public class SignupActivity extends AppCompatActivity {
     String number;
     String username;
     String password;
+    private TextView result;
     private static final String TAG = "SignupActivity";
     FirebaseAuth mFirebaseAuth;
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     private String CHANNEL_ID = "Channel 1";
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+
 
     TextInputLayout layout_name, layout_user, layout_email, layout_number, layout_password;
 
@@ -70,6 +77,8 @@ public class SignupActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_signup);
         mFirebaseAuth = FirebaseAuth.getInstance();
+        result = findViewById(R.id.enkrip);
+
         layout_name = (TextInputLayout) findViewById(R.id.name);
         layout_email = (TextInputLayout) findViewById(R.id.email);
         layout_number = (TextInputLayout) findViewById(R.id.number);
@@ -81,6 +90,9 @@ public class SignupActivity extends AppCompatActivity {
         input_number = (TextInputEditText) findViewById(R.id.input_number);
         input_username = (TextInputEditText) findViewById(R.id.input_username);
         input_password = (TextInputEditText) findViewById(R.id.input_passwordR);
+
+        password = layout_password.getEditText().getText().toString();
+
         btn_signup = (MaterialButton) findViewById(R.id.btn_signup);
         link_login = (TextView) findViewById(R.id.link_login);
 
@@ -90,6 +102,7 @@ public class SignupActivity extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                computeMD5Hash(password);
                 signup();
             }
         });
@@ -123,12 +136,7 @@ public class SignupActivity extends AppCompatActivity {
         String email_layout = layout_email.getEditText().getText().toString();
         String number_layout = layout_number.getEditText().getText().toString();
         String password_layout = layout_password.getEditText().getText().toString();
-
-
-
-
-
-
+        String enkrip = result.getText().toString();
 
 
         String name = input_name.getText().toString();
@@ -154,12 +162,15 @@ public class SignupActivity extends AppCompatActivity {
                                 String userId = rUser.getUid();
                                 reference =  FirebaseDatabase.getInstance().getReference("Users").child(userId);
                                 HashMap<String,String> hashMap = new HashMap<>();
-                                hashMap.put("userId",userId);
-                                hashMap.put("name",name_layout);
-                                hashMap.put("username",user_layout);
-                                hashMap.put("number",number_layout);
-                                hashMap.put("email",email_layout);
-                                hashMap.put("password",password_layout);
+                                    hashMap.put("userId",userId);
+                                    hashMap.put("name",name_layout);
+                                    hashMap.put("username",user_layout);
+                                    hashMap.put("number",number_layout);
+                                    hashMap.put("email",email_layout);
+                                    hashMap.put("password",password);
+                                    //hashMap.put("password",Security.encrypt(password_layout));
+
+
                                 reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -297,4 +308,29 @@ public class SignupActivity extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0,builder.build());
     }
+
+    public void computeMD5Hash(String password) {
+
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            StringBuffer MD5Hash = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++) {
+                String h = Integer.toHexString(0xFF & messageDigest[i]);
+                while (h.length() < 2)
+                    h = "0" + h;
+                MD5Hash.append(h);
+            }
+
+            result.setText(MD5Hash);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

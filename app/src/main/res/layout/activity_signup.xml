@@ -159,7 +159,17 @@
             android:text="Already a member? Login"
             android:textSize="16dip" />
 
-
+        <TextView
+            android:id="@+id/enkrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:background="#00AE3232"
+            android:backgroundTint="#007E1414"
+            android:fontFamily="@font/kavoon"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
 
     </LinearLayout>
 </ScrollView>
