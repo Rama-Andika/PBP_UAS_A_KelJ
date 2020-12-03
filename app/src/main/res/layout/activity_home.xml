@@ -95,6 +95,43 @@
                         android:layout_marginTop="15dp"
                         app:srcCompat="@drawable/profile" />
                 </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFAFA">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="profileMenu">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/yourProfile"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/cantora_one"
+                        android:text="Your Room"
+                        android:textSize="24sp" />
+
+                    <ImageView
+                        android:id="@+id/yourProfile"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/ic_baseline_door" />
+                </RelativeLayout>
+
+
             </androidx.cardview.widget.CardView>
 
 
@@ -160,7 +197,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/cantora_one"
-                        android:text="Our Room"
+                        android:text="Oueen Room"
                         android:textSize="24sp" />
 
                     <ImageView

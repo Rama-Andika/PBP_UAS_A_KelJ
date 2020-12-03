@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        btn_login.setEnabled(false);
+        btn_login.setEnabled(true);
 
 
 
@@ -152,25 +152,30 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "SignIn Unccessfull, Please Try Again", Toast.LENGTH_SHORT).show();
                     btn_login.setEnabled(true);
                 }else{
-                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setMessage("Authenticating...");
-                    progressDialog.show();
-                    new android.os.Handler().postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    // On complete call either onLoginSuccess or onLoginFailed
-                                    onLoginSuccess();
-                                    // onLoginFailed();
-                                    progressDialog.dismiss();
-                                }
-                            }, 2000);
+                    if (mFirebaseAuth.getCurrentUser().isEmailVerified()){
+                        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Authenticating...");
+                        progressDialog.show();
+                        new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        // On complete call either onLoginSuccess or onLoginFailed
+                                        onLoginSuccess();
+                                        // onLoginFailed();
+                                        progressDialog.dismiss();
+                                    }
+                                }, 2000);
 
-                    createNotificationChannel();
-                    addNotification();
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        createNotificationChannel();
+                        addNotification();
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(i);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });

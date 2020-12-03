@@ -146,52 +146,58 @@ public class SignupActivity extends AppCompatActivity {
                     btn_signup.setEnabled(true);
                 }
                 else{
-                    FirebaseUser rUser = mFirebaseAuth.getCurrentUser();
-                    String userId = rUser.getUid();
-                    reference =  FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                    HashMap<String,String> hashMap = new HashMap<>();
-                    hashMap.put("userId",userId);
-                    hashMap.put("name",name_layout);
-                    hashMap.put("username",user_layout);
-                    hashMap.put("number",number_layout);
-                    hashMap.put("email",email_layout);
-                    hashMap.put("password",password_layout);
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mFirebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
-                                progressDialog.setIndeterminate(true);
-                                progressDialog.setMessage("Creating Account...");
-                                progressDialog.show();
+                                FirebaseUser rUser = mFirebaseAuth.getCurrentUser();
+                                String userId = rUser.getUid();
+                                reference =  FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                                HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("userId",userId);
+                                hashMap.put("name",name_layout);
+                                hashMap.put("username",user_layout);
+                                hashMap.put("number",number_layout);
+                                hashMap.put("email",email_layout);
+                                hashMap.put("password",password_layout);
+                                reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme_Dark_Dialog);
+                                            progressDialog.setIndeterminate(true);
+                                            progressDialog.setMessage("Creating Account...");
+                                            progressDialog.show();
 
-                                new Handler().postDelayed(
-                                        new Runnable() {
-                                            public void run() {
-                                                // On complete call either onSignupSuccess or onSignupFailed
-                                                // depending on success
-                                                onSignupSuccess();
-                                                // onSignupFailed();
-                                                progressDialog.dismiss();
-                                            }
-                                        }, 3000);
+                                            new Handler().postDelayed(
+                                                    new Runnable() {
+                                                        public void run() {
+                                                            // On complete call either onSignupSuccess or onSignupFailed
+                                                            // depending on success
+                                                            onSignupSuccess();
+                                                            // onSignupFailed();
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    }, 3000);
 
+                                            createNotificationChannel();
+                                            addNotification();
+                                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                            Toast.makeText(getBaseContext(), "SignUp successfull, Please verify your email", Toast.LENGTH_LONG).show();
+                                            startActivity(intent);
+                                        }
+                                        else {
+                                            Toast.makeText(SignupActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
 
-                                createNotificationChannel();
-                                addNotification();
-                                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            }
-                            else {
+                                    }
+                                });
+
+                            }else{
                                 Toast.makeText(SignupActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
-
                         }
                     });
-
-
-
-
 
                 }
 
