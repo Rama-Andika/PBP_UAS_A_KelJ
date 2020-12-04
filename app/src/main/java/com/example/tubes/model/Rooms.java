@@ -7,62 +7,44 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 
 public class Rooms {
+    private String jenis_kamar, harga_kamar, layanan, image_kamar;
 
-
-    public String nama;
-    public String fasilitas;
-    public int harga;
-    public String imgURL;
-
-    public Rooms(String nama, String fasilitas, int harga, String imgURL)
-    {
-        this.nama = nama;
-        this.fasilitas = fasilitas;
-        this.harga = harga;
-        this.imgURL =imgURL;
+    public Rooms(String jenis_kamar, String harga_kamar, String layanan, String image_kamar) {
+        this.jenis_kamar = jenis_kamar;
+        this.harga_kamar = harga_kamar;
+        this.layanan = layanan;
+        this.image_kamar = image_kamar;
     }
 
-    public String getNama() {
-        return nama;
+    public String getJenis_kamar() {
+        return jenis_kamar;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setJenis_kamar(String jenis_kamar) {
+        this.jenis_kamar = jenis_kamar;
     }
 
-    public String getFasilitas(){
-        return fasilitas;
+    public String getHarga_kamar() {
+        return harga_kamar;
     }
 
-    public void setFasilitas(String fasilitas){
-        this.fasilitas = fasilitas;
+    public void setHarga_kamar(String harga_kamar) {
+        this.harga_kamar = harga_kamar;
     }
 
-    public double getHarga() {
-        return harga;
+    public String getLayanan() {
+        return layanan;
     }
 
-    public void setHarga(int harga) {
-        this.harga = harga;
+    public void setLayanan(String layanan) {
+        this.layanan = layanan;
     }
 
-    public String getStringHarga(){
-        return String.valueOf(harga);
+    public String getImage_kamar() {
+        return image_kamar;
     }
 
-    public String getImgURL() {
-        return imgURL;
-    }
-
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
-    }
-
-
-    @BindingAdapter("android:loadImage")
-    public static void loadImage(ImageView imageView, String imgURL){
-        Glide.with(imageView)
-                .load(imgURL)
-                .into(imageView);
+    public void setImage_kamar(String image_kamar) {
+        this.image_kamar = image_kamar;
     }
 }

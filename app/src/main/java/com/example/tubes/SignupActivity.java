@@ -130,7 +130,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-
+        computeMD5Hash(password);
         String name_layout = layout_name.getEditText().getText().toString();
         String user_layout = layout_user.getEditText().getText().toString();
         String email_layout = layout_email.getEditText().getText().toString();

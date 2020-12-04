@@ -208,7 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(new Intent(ProfileActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
-            startActivity(new Intent(ProfileActivity.this, RoomActivity.class));
+
         }
         else if(id == R.id.nav_profile)
         {

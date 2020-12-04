@@ -53,8 +53,7 @@ public class AboutUsActivity extends AppCompatActivity {
             startActivity(new Intent(AboutUsActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
-            Intent i = new Intent(AboutUsActivity.this, RoomActivity.class);
-            startActivity(i);
+
         }
         else if(id == R.id.nav_profile)
         {

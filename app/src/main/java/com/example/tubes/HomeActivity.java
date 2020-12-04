@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
         else if(id == R.id.nav_ourRoom){
-            startActivity(new Intent(HomeActivity.this, RoomActivity.class));
+
         }
         else if(id == R.id.nav_profile)
         {
@@ -107,13 +107,14 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void ourRoom(View view) {
-        Intent i = new Intent(HomeActivity.this, RoomActivity.class);
-        startActivity(i);
-    }
 
     public void listUser(View view) {
         Intent i = new Intent(HomeActivity.this, ShowListPelangganActivity.class);
+        startActivity(i);
+    }
+
+    public void Room(View view) {
+        Intent i = new Intent(HomeActivity.this, RoomActivity.class);
         startActivity(i);
     }
 }

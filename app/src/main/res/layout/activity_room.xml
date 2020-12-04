@@ -1,24 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="#D34545"
+    android:fitsSystemWindows="true"
+    tools:context=".BookingActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".RoomActivity">
+        android:layout_height="wrap_content"
+        android:backgroundTint="#DD5151"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="56dp"
+        android:paddingRight="24dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:background="#00AE3232"
+            android:backgroundTint="#007E1414"
+            android:fontFamily="@font/kavoon"
+            android:text="Add Room"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_room"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/adapter_recycler_view" />
-    </FrameLayout>
-</layout>
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#000000">
+
+                <ImageView
+                    android:id="@+id/ivGambar"
+                    android:layout_width="300dp"
+                    android:layout_height="180dp"
+                    android:layout_margin="2dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/noimage" />
+            </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUnggah"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_cloud_upload_24"
+                android:drawableTint="#FFFFFF"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Unggah"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:backgroundTint="#FF9800"
+                app:cornerRadius="15dp"
+                app:iconTint="#371919" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/jenisKamar"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:passwordToggleTint="#00FFFFFF"
+            app:startIconDrawable="@drawable/book_hotel"
+            app:startIconTint="#FF9800">
+            <AutoCompleteTextView
+                android:id="@+id/edKamar"
+                android:hint="Room"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/priceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#FF9800"
+            app:startIconDrawable="@drawable/ic_baseline_money_24"
+            app:startIconTint="#FF9800">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="price"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layananLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:boxBackgroundColor="#00FFFFFF"
+            app:boxStrokeColor="#000000"
+            app:endIconTint="#000000"
+            app:hintTextColor="#000000"
+            app:startIconDrawable="@drawable/ic_baseline_room_preferences_24"
+            app:startIconTint="#FF9800">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/layanan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Layanan"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_create"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="Create"
+            app:backgroundTint="#000000" />
+
+    </LinearLayout>
+</ScrollView>

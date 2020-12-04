@@ -2,7 +2,6 @@ package com.example.tubes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,10 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tubes.API.ApiClient;
@@ -48,7 +43,7 @@ public class EditActivity extends AppCompatActivity {
 
     protected Cursor cursor;
     DatePickerDialog.OnDateSetListener setListener;
-    private static final String TAG = "BookingActivity";
+    private static final String TAG = "EditActivity";
     private AutoCompleteTextView exposedDropdownRoom;
     private TextInputLayout name, room, date, adult, child;
     private TextInputEditText input_name, input_date, input_adult, input_child;
@@ -62,7 +57,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_booking);
+        setContentView(R.layout.activity_edit);
 
         id = getIntent().getStringExtra("id");
         Log.i("EDITUSERID", "ID User: " + id);
@@ -81,7 +76,7 @@ public class EditActivity extends AppCompatActivity {
         input_date = (TextInputEditText) findViewById(R.id.input_date);
         input_adult = (TextInputEditText) findViewById(R.id.input_adult);
         input_child = (TextInputEditText) findViewById(R.id.input_child);
-        btn_book = findViewById(R.id.btn_book);
+        btn_book = findViewById(R.id.btn_create);
 
         ArrayAdapter<String> adapterRoom = new ArrayAdapter<>(Objects.requireNonNull(this),
                 R.layout.list_item, R.id.item_list, saRoom );
@@ -174,7 +169,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 Toast.makeText(EditActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                Log.i("EDIT", new GsonBuilder().setPrettyPrinting().create().toJson(response));
+
                 progressDialog.dismiss();
                 finish();
             }
@@ -182,7 +177,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Toast.makeText(EditActivity.this, "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
-                Log.i("EDIT", t.getMessage());
+
                 progressDialog.dismiss();
             }
         });
@@ -190,13 +185,13 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onBookingSuccess() {
-        Toast.makeText(getBaseContext(), "Booking success", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, HomeActivity.class);
+        Toast.makeText(getBaseContext(), "Edit success", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ShowListPelangganActivity.class);
         startActivity(intent);
     }
 
     public void onBookingFailed() {
-        Toast.makeText(getBaseContext(), "Booking failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Edit failed", Toast.LENGTH_LONG).show();
 
         btn_book.setEnabled(true);
     }
