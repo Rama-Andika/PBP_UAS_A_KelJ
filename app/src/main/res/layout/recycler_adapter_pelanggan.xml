@@ -14,6 +14,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FF9800"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:orientation="vertical">
@@ -28,17 +29,17 @@
                 android:id="@+id/twNama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
                 android:hint="Nama"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/twRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:hint="Nim"
-                android:textColor="@color/black"/>
+                android:hint="Room"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
         </LinearLayout>
     </LinearLayout>
 

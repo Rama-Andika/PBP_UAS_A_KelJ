@@ -95,6 +95,8 @@ public class ProfileActivity extends AppCompatActivity {
         input_username = findViewById(R.id.input_username);
         input_number = findViewById(R.id.input_number);
 
+        input_email.setEnabled(true);
+
         image_view = findViewById(R.id.image_profile);
         btn_update = findViewById(R.id.btn_update);
         btn_back = findViewById(R.id.btn_back);
@@ -162,15 +164,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
-
-
-
-        if (ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 101);
-        }
 
         image_layout.setOnClickListener(new View.OnClickListener() {
             @Override

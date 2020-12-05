@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,9 +15,9 @@ import android.widget.Toast;
 
 import com.example.tubes.API.ApiClient;
 import com.example.tubes.API.ApiInterface;
-import com.example.tubes.API.BookingDAO;
-import com.example.tubes.API.UserResponse;
-import com.example.tubes.adapter.PelangganRecyclerAdapter;
+import com.example.tubes.API.RoomDAO;
+import com.example.tubes.API.RoomResponse;
+import com.example.tubes.adapter.RoomRecyclerAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
@@ -28,11 +27,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowListPelangganActivity extends AppCompatActivity {
+public class ShowListRoomActivity extends AppCompatActivity {
+
     private ImageButton ibBack;
     private RecyclerView recyclerView;
-    private PelangganRecyclerAdapter recyclerAdapter;
-    private List<BookingDAO> user = new ArrayList<>();
+    private RoomRecyclerAdapter recyclerAdapter;
+    private List<RoomDAO> user = new ArrayList<>();
     private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerFrameLayout;
@@ -42,9 +42,9 @@ public class ShowListPelangganActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_show_list_pelanggan);
+        setContentView(R.layout.activity_show_list_room);
 
-        shimmerFrameLayout = findViewById(R.id.shimmerLayout);
+        shimmerFrameLayout = findViewById(R.id.shimmerRoomLayout);
         shimmerFrameLayout.startShimmer();
 
         ibBack = findViewById(R.id.ibBack);
@@ -71,27 +71,27 @@ public class ShowListPelangganActivity extends AppCompatActivity {
 
     public void loadUser() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<UserResponse> call = apiService.getAllPelanggan("data");
+        Call<RoomResponse> call = apiService.getAllRoom("data");
 
-        call.enqueue(new Callback<UserResponse>() {
+        call.enqueue(new Callback<RoomResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                generateDataList(response.body().getPelanggans());
+            public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
+                generateDataList(response.body().getRooms());
                 swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(ShowListPelangganActivity.this, "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<RoomResponse> call, Throwable t) {
+                Toast.makeText(ShowListRoomActivity.this, "kesalahan jaringan", Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
 
     }
 
-    private void generateDataList(List<BookingDAO> customerList) {
-        recyclerView = findViewById(R.id.userRecylerView);
-        recyclerAdapter = new PelangganRecyclerAdapter(this, customerList);
+    private void generateDataList(List<RoomDAO> customerList) {
+        recyclerView = findViewById(R.id.roomRecylerView);
+        recyclerAdapter = new RoomRecyclerAdapter(this, customerList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);

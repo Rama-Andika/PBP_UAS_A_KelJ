@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RoomActivity extends AppCompatActivity {
+public class EditRoomActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
@@ -49,30 +49,32 @@ public class RoomActivity extends AppCompatActivity {
     private TextInputLayout priceLayout;
     private TextInputEditText layanan;
     private TextInputEditText price;
-    MaterialButton btn_create, btnUnggah;
+    private MaterialButton btn_edit;
     private String sRoom = "";
     private String[] saRoom = new String[] {"Classic", "Standart", "Deluxe"};
     private ProgressDialog progressDialog;
     private ImageView ivGambar;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_room);
+        setContentView(R.layout.activity_edit_room);
+
+        id = getIntent().getStringExtra("id");
+        Log.i("EDITUSERID", "ID User: " + id);
 
         progressDialog = new ProgressDialog(this);
 
         exposedDropdownRoom = findViewById(R.id.edKamar);
-        
-        ivGambar = findViewById(R.id.ivGambar);
 
         layananLayout = (TextInputLayout) findViewById(R.id.layananLayout);
         priceLayout = (TextInputLayout) findViewById(R.id.priceLayout);
 
-        layanan = (TextInputEditText) findViewById(R.id.layanan);
-        price = (TextInputEditText) findViewById(R.id.price);
-        btn_create = findViewById(R.id.btn_create);
+        layanan = findViewById(R.id.layanan);
+        price = findViewById(R.id.price);
+        btn_edit = findViewById(R.id.btn_edit);
 
         ArrayAdapter<String> adapterRoom = new ArrayAdapter<>(Objects.requireNonNull(this),
                 R.layout.list_item, R.id.item_list, saRoom );
@@ -85,16 +87,45 @@ public class RoomActivity extends AppCompatActivity {
         });
 
 
-        btn_create.setOnClickListener(new View.OnClickListener() {
+        btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createRoom();
+                editRoom();
             }
         });
 
+        loadUser(id);
     }
 
-    public void createRoom(){
+    private void loadUser(String id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<RoomResponse> call = apiService.getRoomById(id, "data");
+
+        call.enqueue(new Callback<RoomResponse>() {
+            @Override
+            public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
+                String layanan1 = response.body().getRooms().get(0).getLayanan();
+                sRoom = response.body().getRooms().get(0).getJenis_kamar();
+                String harga1 = response.body().getRooms().get(0).getHarga_kamar();
+
+                exposedDropdownRoom.setText(sRoom, false);
+                layanan.setText(layanan1);
+                price.setText(harga1);
+
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<RoomResponse> call, Throwable t) {
+                Toast.makeText(EditRoomActivity.this, "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+                Log.i("EDITERROR", t.getMessage());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void editRoom(){
         Log.d(TAG, "Booking");
 
         if (!validate()) {
@@ -103,20 +134,20 @@ public class RoomActivity extends AppCompatActivity {
         }
         progressDialog.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<RoomResponse> add = apiService.createRoom(sRoom, price.getText().toString(),
+        Call<RoomResponse> add = apiService.updateRoom(id, sRoom, price.getText().toString(),
                 layanan.getText().toString());
 
         add.enqueue(new Callback<RoomResponse>() {
             @Override
             public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
-                Toast.makeText(RoomActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditRoomActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 onBackPressed();
             }
 
             @Override
             public void onFailure(Call<RoomResponse> call, Throwable t) {
-                Toast.makeText(RoomActivity.this, "Kesalahan jaringan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditRoomActivity.this, "Kesalahan jaringan", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -124,13 +155,15 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     public void onBookingSuccess() {
-        finish();
+        Toast.makeText(getBaseContext(), "Create Room success", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ShowListRoomActivity.class);
+        startActivity(intent);
     }
 
     public void onBookingFailed() {
         Toast.makeText(getBaseContext(), "Create Room failed", Toast.LENGTH_LONG).show();
 
-        btn_create.setEnabled(true);
+        btn_edit.setEnabled(true);
     }
 
     public boolean validate(){
@@ -156,6 +189,4 @@ public class RoomActivity extends AppCompatActivity {
 
         return valid;
     }
-
-
 }

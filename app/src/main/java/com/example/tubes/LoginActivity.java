@@ -132,6 +132,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if(input1.equalsIgnoreCase("admin") && input2.equalsIgnoreCase("admin"))
         {
+            if (rememberMe.isChecked()){
+                savePreferences();
+            }
             Intent i = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(i);
         }

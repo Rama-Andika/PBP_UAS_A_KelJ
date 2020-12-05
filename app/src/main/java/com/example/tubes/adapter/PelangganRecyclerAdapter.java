@@ -1,4 +1,4 @@
-package com.example.tubes;
+package com.example.tubes.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tubes.API.BookingDAO;
+import com.example.tubes.DetailPelangganFragment;
+import com.example.tubes.R;
 
 import java.util.ArrayList;
 import java.util.List;
