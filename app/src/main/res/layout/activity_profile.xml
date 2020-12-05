@@ -111,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_baseline_email_24"
                     android:drawablePadding="10dp"
+                    android:focusable="false"
                     android:fontFamily="@font/abril_fatface"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>

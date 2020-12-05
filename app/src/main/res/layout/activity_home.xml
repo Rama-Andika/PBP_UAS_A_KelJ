@@ -200,7 +200,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/cantora_one"
-                        android:text="Oueen Room"
+                        android:text="List Room"
                         android:textSize="24sp" />
 
                     <ImageView

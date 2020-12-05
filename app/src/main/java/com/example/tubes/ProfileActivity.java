@@ -95,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         input_username = findViewById(R.id.input_username);
         input_number = findViewById(R.id.input_number);
 
-        input_email.setEnabled(true);
+        input_email.setEnabled(false);
 
         image_view = findViewById(R.id.image_profile);
         btn_update = findViewById(R.id.btn_update);
