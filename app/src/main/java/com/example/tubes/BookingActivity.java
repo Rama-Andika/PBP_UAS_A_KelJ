@@ -133,6 +133,7 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 Toast.makeText(BookingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
+                onBackPressed();
             }
 
             @Override
@@ -145,12 +146,11 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void onBookingSuccess() {
-        Toast.makeText(getBaseContext(), "Booking success", Toast.LENGTH_LONG).show();
-        finish();
+        Toast.makeText(BookingActivity.this, "Booking success", Toast.LENGTH_LONG).show();
     }
 
     public void onBookingFailed() {
-        Toast.makeText(getBaseContext(), "Booking failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(BookingActivity.this, "Booking failed", Toast.LENGTH_LONG).show();
 
         btn_book.setEnabled(true);
     }
