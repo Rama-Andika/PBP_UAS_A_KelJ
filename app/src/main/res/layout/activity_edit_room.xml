@@ -84,7 +84,7 @@
             app:boxStrokeColor="#000000"
             app:endIconTint="#000000"
             app:hintTextColor="#000000"
-            android:hint="Layanan"
+            android:hint="Fitur dan Layanan"
             app:startIconDrawable="@drawable/ic_baseline_room_preferences_24"
             app:startIconTint="#FF9800">
 
