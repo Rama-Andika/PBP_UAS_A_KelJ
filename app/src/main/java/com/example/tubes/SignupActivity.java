@@ -102,7 +102,7 @@ public class SignupActivity extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                computeMD5Hash(password);
+//                computeMD5Hash(password);
                 signup();
             }
         });
@@ -130,7 +130,6 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-        computeMD5Hash(password);
         String name_layout = layout_name.getEditText().getText().toString();
         String user_layout = layout_user.getEditText().getText().toString();
         String email_layout = layout_email.getEditText().getText().toString();
@@ -167,7 +166,7 @@ public class SignupActivity extends AppCompatActivity {
                                     hashMap.put("username",user_layout);
                                     hashMap.put("number",number_layout);
                                     hashMap.put("email",email_layout);
-                                    hashMap.put("password",password);
+                                    hashMap.put("password",computedMD5Hash(input_password.getText().toString()).toString());
                                     //hashMap.put("password",Security.encrypt(password_layout));
 
 
@@ -309,27 +308,25 @@ public class SignupActivity extends AppCompatActivity {
         manager.notify(0,builder.build());
     }
 
-    public void computeMD5Hash(String password) {
-
+    public StringBuffer computedMD5Hash(String password){
         try {
-            // Create MD5 Hash
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
             digest.update(password.getBytes());
-            byte messageDigest[] = digest.digest();
+            byte messageDiggest[] = digest.digest();
 
             StringBuffer MD5Hash = new StringBuffer();
-            for (int i = 0; i < messageDigest.length; i++) {
-                String h = Integer.toHexString(0xFF & messageDigest[i]);
+            for(int i=0; i< messageDiggest.length;i++){
+                String h = Integer.toHexString(0xFF & messageDiggest[i]);
                 while (h.length() < 2)
                     h = "0" + h;
                 MD5Hash.append(h);
             }
 
-            result.setText(MD5Hash);
-
-        } catch (NoSuchAlgorithmException e) {
+            return MD5Hash;
+        }catch (NoSuchAlgorithmException e){
             e.printStackTrace();
         }
+        return null;
     }
 
 
