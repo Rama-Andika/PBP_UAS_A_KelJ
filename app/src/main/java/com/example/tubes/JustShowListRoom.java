@@ -18,12 +18,10 @@ import com.example.tubes.API.ApiClient;
 import com.example.tubes.API.ApiInterface;
 import com.example.tubes.API.RoomDAO;
 import com.example.tubes.API.RoomResponse;
-import com.example.tubes.PDF.PdfViewModel;
 import com.example.tubes.adapter.JustShowRoomAdapter;
 import com.example.tubes.adapter.RoomRecyclerAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.button.MaterialButton;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,12 +40,10 @@ public class JustShowListRoom extends AppCompatActivity {
     private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerFrameLayout;
-    private PdfViewModel pdfViewModel;
 
     private static final String TAG = "PdfCreatorActivity";
     final private int REQUEST_CODE_ASK_PERMISSIONS = 101;
     private File pdfFile;
-    private PdfWriter writer;
     private AlertDialog.Builder builder;
     private MaterialButton btn_create_pdf;
 
