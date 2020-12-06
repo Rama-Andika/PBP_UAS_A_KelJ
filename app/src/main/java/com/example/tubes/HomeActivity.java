@@ -64,9 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         else if(id == R.id.nav_location){
             startActivity(new Intent(HomeActivity.this, HotelLocationActivity.class));
         }
-        else if(id == R.id.nav_ourRoom){
-
-        }
         else if(id == R.id.nav_profile)
         {
             startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
