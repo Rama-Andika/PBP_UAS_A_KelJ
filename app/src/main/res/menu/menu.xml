@@ -31,12 +31,6 @@
             android:title="Book Room"
             android:orderInCategory="1"
             app:showAsAction="never"/>
-        <item
-            android:id="@+id/nav_ourRoom"
-            android:icon="@drawable/hotel"
-            android:title="Our Room"
-            android:orderInCategory="1"
-            app:showAsAction="never"/>
 
         <item
             android:id="@+id/nav_logout"
