@@ -163,7 +163,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
+        if (ContextCompat.checkSelfPermission(ProfileActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 101);
+        }
 
         image_layout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,7 +20,6 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -35,13 +34,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BookingActivityTest {
+public class BookingTestJ {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void bookingActivityTest() {
+    public void bookingTestJ() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -57,8 +56,8 @@ public class BookingActivityTest {
                                 childAtPosition(
                                         withId(R.id.email),
                                         0),
-                                0)));
-        textInputEditText.perform(scrollTo(), replaceText("admin"), closeSoftKeyboard());
+                                1)));
+        textInputEditText.perform(scrollTo(), replaceText("ramaandika31@gmail.com"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText2 = onView(
                 allOf(withId(R.id.input_passwordR),
@@ -66,8 +65,8 @@ public class BookingActivityTest {
                                 childAtPosition(
                                         withId(R.id.password),
                                         0),
-                                0)));
-        textInputEditText2.perform(scrollTo(), replaceText("admin"), closeSoftKeyboard());
+                                1)));
+        textInputEditText2.perform(scrollTo(), replaceText("nabilaholic48"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.btn_login), withText("Login"),
@@ -87,14 +86,15 @@ public class BookingActivityTest {
             e.printStackTrace();
         }
 
-        ViewInteraction linearLayout = onView(
-                childAtPosition(
-                        allOf(withId(R.id.cvCreateUser),
+        ViewInteraction appCompatImageView = onView(
+                allOf(withId(R.id.imgHotel),
+                        childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.GridLayout")),
-                                        1)),
-                        0));
-        linearLayout.perform(scrollTo(), click());
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatImageView.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -104,8 +104,6 @@ public class BookingActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        pressBack();
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.btn_book), withText("Booking"),
@@ -123,18 +121,7 @@ public class BookingActivityTest {
                                         withId(R.id.name),
                                         0),
                                 0)));
-        textInputEditText3.perform(scrollTo(), click());
-
-        ViewInteraction textInputEditText4 = onView(
-                allOf(withId(R.id.input_name),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.name),
-                                        0),
-                                0)));
-        textInputEditText4.perform(scrollTo(), replaceText("a"), closeSoftKeyboard());
-
-        pressBack();
+        textInputEditText3.perform(scrollTo(), replaceText("juan"), closeSoftKeyboard());
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.btn_book), withText("Booking"),
@@ -145,60 +132,39 @@ public class BookingActivityTest {
                                 6)));
         materialButton3.perform(scrollTo(), click());
 
-        ViewInteraction textInputEditText5 = onView(
-                allOf(withId(R.id.input_name), withText("a"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.name),
-                                        0),
-                                0)));
-        textInputEditText5.perform(scrollTo(), click());
-
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.input_name), withText("a"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.name),
-                                        0),
-                                0)));
-        textInputEditText6.perform(scrollTo(), replaceText("Radra"));
-
-        ViewInteraction textInputEditText7 = onView(
-                allOf(withId(R.id.input_name), withText("Radra"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.name),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText7.perform(closeSoftKeyboard());
-
-        pressBack();
-
-        ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.btn_book), withText("Booking"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                6)));
-        materialButton4.perform(scrollTo(), click());
-
         ViewInteraction materialAutoCompleteTextView = onView(
                 allOf(withId(R.id.edRoom),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.room),
                                         0),
-                                0)));
+                                1)));
         materialAutoCompleteTextView.perform(scrollTo(), click());
 
         DataInteraction frameLayout = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
-                .atPosition(0);
-        frameLayout.perform(click());
+                .atPosition(1);
+//        frameLayout.perform(click());
+
+        ViewInteraction textInputEditText4 = onView(
+                allOf(withId(R.id.input_date),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.date),
+                                        0),
+                                1)));
+        textInputEditText4.perform(scrollTo(), click());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+//        materialButton4.perform(scrollTo(), click());
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.btn_book), withText("Booking"),
@@ -209,25 +175,32 @@ public class BookingActivityTest {
                                 6)));
         materialButton5.perform(scrollTo(), click());
 
-        ViewInteraction textInputEditText8 = onView(
-                allOf(withId(R.id.input_date),
+        ViewInteraction textInputEditText5 = onView(
+                allOf(withId(R.id.input_adult),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.date),
+                                        withId(R.id.adult),
                                         0),
-                                0)));
-        textInputEditText8.perform(scrollTo(), click());
+                                1)));
+        textInputEditText5.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
+                allOf(withId(R.id.btn_book), withText("Booking"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
-                                3)));
+                                6)));
         materialButton6.perform(scrollTo(), click());
 
-        pressBack();
+        ViewInteraction textInputEditText6 = onView(
+                allOf(withId(R.id.input_child),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.child),
+                                        0),
+                                1)));
+        textInputEditText6.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction materialButton7 = onView(
                 allOf(withId(R.id.btn_book), withText("Booking"),
@@ -237,55 +210,6 @@ public class BookingActivityTest {
                                         0),
                                 6)));
         materialButton7.perform(scrollTo(), click());
-
-        ViewInteraction textInputEditText9 = onView(
-                allOf(withId(R.id.input_adult),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.adult),
-                                        0),
-                                0)));
-        textInputEditText9.perform(scrollTo(), replaceText("2"), closeSoftKeyboard());
-
-        pressBack();
-
-        ViewInteraction materialButton8 = onView(
-                allOf(withId(R.id.btn_book), withText("Booking"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                6)));
-        materialButton8.perform(scrollTo(), click());
-
-        ViewInteraction materialButton9 = onView(
-                allOf(withId(R.id.btn_book), withText("Booking"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                6)));
-        materialButton9.perform(scrollTo(), click());
-
-        ViewInteraction textInputEditText10 = onView(
-                allOf(withId(R.id.input_child),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.child),
-                                        0),
-                                0)));
-        textInputEditText10.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
-
-        pressBack();
-
-        ViewInteraction materialButton10 = onView(
-                allOf(withId(R.id.btn_book), withText("Booking"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                6)));
-        materialButton10.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
