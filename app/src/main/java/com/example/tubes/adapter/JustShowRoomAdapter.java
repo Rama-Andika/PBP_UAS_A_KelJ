@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.tubes.API.BookingDAO;
 import com.example.tubes.API.RoomDAO;
 import com.example.tubes.DetailPelangganFragment;
@@ -83,6 +86,11 @@ public class JustShowRoomAdapter extends RecyclerView.Adapter<JustShowRoomAdapte
         holder.twKamar.setText(brg.getJenis_kamar());
         holder.twPrice.setText(brg.getHarga_kamar());
         holder.twLayanan.setText(brg.getLayanan());
+        Glide.with(context)
+                .load(brg.getGambar())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.ivGambar);
     }
 
     @Override
@@ -93,12 +101,14 @@ public class JustShowRoomAdapter extends RecyclerView.Adapter<JustShowRoomAdapte
     public class RoomViewHolder extends RecyclerView.ViewHolder{
         private TextView twKamar, twPrice, twLayanan;
         private LinearLayout mParent;
+        private ImageView ivGambar;
 
         public RoomViewHolder(@NonNull View itemView){
             super(itemView);
             twKamar = itemView.findViewById(R.id.twKamar);
             twPrice = itemView.findViewById(R.id.twPrice);
             twLayanan = itemView.findViewById(R.id.twLayanan);
+            ivGambar = itemView.findViewById(R.id.ivGambar);
             mParent = itemView.findViewById(R.id.linearLayout);
         }
     }

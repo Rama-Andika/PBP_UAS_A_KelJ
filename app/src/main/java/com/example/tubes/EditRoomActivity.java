@@ -49,6 +49,7 @@ public class EditRoomActivity extends AppCompatActivity {
     private TextInputLayout priceLayout;
     private TextInputEditText layanan;
     private TextInputEditText price;
+    private TextInputEditText gambar;
     private MaterialButton btn_edit;
     private String sRoom = "";
     private String[] saRoom = new String[] {"Classic", "Standart", "Deluxe"};
@@ -74,6 +75,7 @@ public class EditRoomActivity extends AppCompatActivity {
 
         layanan = findViewById(R.id.layanan);
         price = findViewById(R.id.price);
+        gambar = findViewById(R.id.gambar);
         btn_edit = findViewById(R.id.btn_edit);
 
         ArrayAdapter<String> adapterRoom = new ArrayAdapter<>(Objects.requireNonNull(this),
@@ -107,10 +109,12 @@ public class EditRoomActivity extends AppCompatActivity {
                 String layanan1 = response.body().getRooms().get(0).getLayanan();
                 sRoom = response.body().getRooms().get(0).getJenis_kamar();
                 String harga1 = response.body().getRooms().get(0).getHarga_kamar();
+                String image = response.body().getRooms().get(0).getGambar();
 
                 exposedDropdownRoom.setText(sRoom, false);
                 layanan.setText(layanan1);
                 price.setText(harga1);
+                gambar.setText(image);
 
 
                 progressDialog.dismiss();
@@ -135,7 +139,7 @@ public class EditRoomActivity extends AppCompatActivity {
         progressDialog.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<RoomResponse> add = apiService.updateRoom(id, sRoom, price.getText().toString(),
-                layanan.getText().toString());
+                layanan.getText().toString(), gambar.getText().toString());
 
         add.enqueue(new Callback<RoomResponse>() {
             @Override
@@ -155,13 +159,13 @@ public class EditRoomActivity extends AppCompatActivity {
     }
 
     public void onBookingSuccess() {
-        Toast.makeText(getBaseContext(), "Create Room success", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Edit Room success", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, ShowListRoomActivity.class);
         startActivity(intent);
     }
 
     public void onBookingFailed() {
-        Toast.makeText(getBaseContext(), "Create Room failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Edit Room failed", Toast.LENGTH_LONG).show();
 
         btn_edit.setEnabled(true);
     }

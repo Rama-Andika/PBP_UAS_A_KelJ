@@ -49,6 +49,7 @@ public class RoomActivity extends AppCompatActivity {
     private TextInputLayout priceLayout;
     private TextInputEditText layanan;
     private TextInputEditText price;
+    private TextInputEditText gambar;
     MaterialButton btn_create, btnUnggah;
     private String sRoom = "";
     private String[] saRoom = new String[] {"Classic", "Standart", "Deluxe"};
@@ -72,6 +73,7 @@ public class RoomActivity extends AppCompatActivity {
 
         layanan = (TextInputEditText) findViewById(R.id.layanan);
         price = (TextInputEditText) findViewById(R.id.price);
+        gambar = (TextInputEditText) findViewById(R.id.gambar);
         btn_create = findViewById(R.id.btn_create);
 
         ArrayAdapter<String> adapterRoom = new ArrayAdapter<>(Objects.requireNonNull(this),
@@ -104,7 +106,7 @@ public class RoomActivity extends AppCompatActivity {
         progressDialog.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<RoomResponse> add = apiService.createRoom(sRoom, price.getText().toString(),
-                layanan.getText().toString());
+                layanan.getText().toString(), gambar.getText().toString());
 
         add.enqueue(new Callback<RoomResponse>() {
             @Override
@@ -138,6 +140,7 @@ public class RoomActivity extends AppCompatActivity {
 
         String layanan = this.layanan.getText().toString();
         String price = this.price.getText().toString();
+        String gambar = this.gambar.getText().toString();
 
         if (layanan.isEmpty() || layanan.length() < 3) {
             this.layanan.setError("At Least 3 Characters");
@@ -152,7 +155,12 @@ public class RoomActivity extends AppCompatActivity {
         } else {
             this.price.setError(null);
         }
-
+        if (gambar.isEmpty()){
+            this.gambar.setError("Enter Url image");
+            valid = false;
+        } else {
+            this.gambar.setError(null);
+        }
 
         return valid;
     }

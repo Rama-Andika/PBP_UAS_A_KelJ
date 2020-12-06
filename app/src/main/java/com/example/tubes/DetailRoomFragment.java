@@ -114,7 +114,7 @@ public class DetailRoomFragment extends DialogFragment {
 
     private void delete(String id) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        final Call<RoomResponse> req = apiService.deleteRoom(id, "", "", "");
+        final Call<RoomResponse> req = apiService.deleteRoom(id, "", "", "", "");
 
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

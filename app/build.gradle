@@ -40,7 +40,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'com.google.firebase:firebase-database:19.5.0'
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
     testImplementation 'junit:junit:4.12'
@@ -86,6 +88,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.8'
+    implementation 'com.github.Bleoo:WindowImageView:1.0.2'
+    implementation 'com.facebook.fresco:fresco:1.5.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
 
 

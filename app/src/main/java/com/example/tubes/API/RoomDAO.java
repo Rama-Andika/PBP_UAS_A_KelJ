@@ -15,11 +15,16 @@ public class RoomDAO {
     @SerializedName("layanan")
     private  String layanan;
 
-    public RoomDAO(String id, String jenis_kamar, String harga_kamar, String layanan) {
+    @SerializedName("gambar")
+    private  String gambar;
+
+
+    public RoomDAO(String id, String jenis_kamar, String harga_kamar, String layanan, String gambar) {
         this.id = id;
         this.jenis_kamar = jenis_kamar;
         this.harga_kamar = harga_kamar;
         this.layanan = layanan;
+        this.gambar = gambar;
     }
 
     public String getId() {
@@ -52,5 +57,13 @@ public class RoomDAO {
 
     public void setLayanan(String layanan) {
         this.layanan = layanan;
+    }
+
+    public String getGambar() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
     }
 }

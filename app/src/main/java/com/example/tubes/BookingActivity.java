@@ -170,9 +170,6 @@ public class BookingActivity extends AppCompatActivity implements AdapterView.On
             input_name.setError(null);
         }
 
-
-
-
         if (date.isEmpty()){
             input_date.setError("Enter Valid Date");
             valid = false;

@@ -50,18 +50,19 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<RoomResponse> createRoom(@Field("jenis_kamar")String jenis_kamar,
                                        @Field("harga_kamar")String harga_kamar,
-                                       @Field("layanan")String layanan);
+                                       @Field("layanan")String layanan,
+                                       @Field("gambar")String gambar);
 
 
     @POST("room/delete/{id}")
     @FormUrlEncoded
     Call<RoomResponse> deleteRoom(@Path("id") String id,@Field("jenis_kamar")String jenis_kamar,
                                   @Field("harga_kamar")String harga_kamar,
-                                  @Field("layanan")String layanan);
+                                  @Field("layanan")String layanan,@Field("gambar")String gambar);
 
     @POST("room/update/{id}")
     @FormUrlEncoded
     Call<RoomResponse> updateRoom(@Path("id") String id,@Field("jenis_kamar")String jenis_kamar,
                                   @Field("harga_kamar")String harga_kamar,
-                                  @Field("layanan")String layanan);
+                                  @Field("layanan")String layanan, @Field("gambar")String gambar);
 }

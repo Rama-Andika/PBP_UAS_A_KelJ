@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,10 +18,14 @@ import com.example.tubes.API.ApiClient;
 import com.example.tubes.API.ApiInterface;
 import com.example.tubes.API.RoomDAO;
 import com.example.tubes.API.RoomResponse;
+import com.example.tubes.PDF.PdfViewModel;
 import com.example.tubes.adapter.JustShowRoomAdapter;
 import com.example.tubes.adapter.RoomRecyclerAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.button.MaterialButton;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +42,14 @@ public class JustShowListRoom extends AppCompatActivity {
     private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ShimmerFrameLayout shimmerFrameLayout;
+    private PdfViewModel pdfViewModel;
+
+    private static final String TAG = "PdfCreatorActivity";
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 101;
+    private File pdfFile;
+    private PdfWriter writer;
+    private AlertDialog.Builder builder;
+    private MaterialButton btn_create_pdf;
 
 
     @Override
@@ -49,6 +62,8 @@ public class JustShowListRoom extends AppCompatActivity {
         shimmerFrameLayout.startShimmer();
 
         ibBack = findViewById(R.id.ibBack);
+//        btn_create_pdf = findViewById(R.id.btn_create_pdf);
+
         ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +94,8 @@ public class JustShowListRoom extends AppCompatActivity {
             public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
                 generateDataList(response.body().getRooms());
                 swipeRefreshLayout.setRefreshing(false);
+
+
             }
 
             @Override
