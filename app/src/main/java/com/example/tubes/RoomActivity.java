@@ -103,6 +103,7 @@ public class RoomActivity extends AppCompatActivity {
             onBookingFailed();
             return;
         }
+
         progressDialog.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<RoomResponse> add = apiService.createRoom(sRoom, price.getText().toString(),
@@ -122,7 +123,7 @@ public class RoomActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-        onBookingSuccess();
+//        onBookingSuccess();
     }
 
     public void onBookingSuccess() {
